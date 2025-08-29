@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+
+    <!-- Bootstrap CDN for better UI -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        .container {
+            margin-top: 50px;
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .navbar {
+            background: #007bff;
+            padding: 10px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .switch-btn {
+            background: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="./index.html">Kisaan-Mitra</a>
+        <a href="#" id="navbar-login-btn" style="float: right;">Login</a>
+    </div>
+
+    <!-- Login Form -->
+    <div class="container" id="login-form">
+        <h2>Login</h2>
+        <input type="email" id="login-email" placeholder="Email">
+        <input type="password" id="login-password" placeholder="Password">
+        <button id="login-btn">Login</button>
+        <button class="switch-btn" id="show-register">Create an Account</button>
+    </div>
+
+    <!-- Register Form (Initially Hidden) -->
+    <div class="container hidden" id="register-form">
+        <h2>Register</h2>
+        <input type="email" id="register-email" placeholder="Email">
+        <input type="password" id="register-password" placeholder="Password">
+        <button id="register-btn">Register</button>
+        <button class="switch-btn" id="show-login">Already have an account? Login</button>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyC-1yQL5ufMf-GPwBAN8H_GYGL6andB36g",
+            authDomain: "kisaan-mitra-a0e8f.firebaseapp.com",
+            projectId: "kisaan-mitra-a0e8f",
+            storageBucket: "kisaan-mitra-a0e8f.appspot.com",
+            messagingSenderId: "28889998059",
+            appId: "1:28889998059:web:e5995a6ef5ef818c8714ae",
+            measurementId: "G-EL950HE3PD"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        // Switch Between Login & Register Forms
+        document.getElementById("show-register").addEventListener("click", () => {
+            document.getElementById("login-form").classList.add("hidden");
+            document.getElementById("register-form").classList.remove("hidden");
+        });
+
+        document.getElementById("show-login").addEventListener("click", () => {
+            document.getElementById("register-form").classList.add("hidden");
+            document.getElementById("login-form").classList.remove("hidden");
+        });
+
+        // Register Function
+        document.getElementById("register-btn").addEventListener("click", () => {
+            const email = document.getElementById("register-email").value;
+            const password = document.getElementById("register-password").value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("User Registered Successfully");
+                    document.getElementById("register-form").classList.add("hidden");
+                    document.getElementById("login-form").classList.remove("hidden");
+                })
+                .catch((error) => {
+                    alert(error.message);
+                });
+        });
+
+        // Login Function
+        document.getElementById("login-btn").addEventListener("click", () => {
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("Login Successful!");
+                    document.getElementById("login-form").classList.add("hidden");
+                    document.getElementById("navbar-login-btn").innerText = "Logout";
+                })
+                .catch((error) => {
+                    alert(error.message);
+                });
+        });
+
+        // Logout Function (Changes Navbar Button)
+        document.getElementById("navbar-login-btn").addEventListener("click", () => {
+            if (document.getElementById("navbar-login-btn").innerText === "Logout") {
+                signOut(auth)
+                    .then(() => {
+                        alert("User Logged Out");
+                        document.getElementById("navbar-login-btn").innerText = "Login";
+                        document.getElementById("login-form").classList.remove("hidden");
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        });
+    </script>
+
+</body>
+</html>

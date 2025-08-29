@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fertilizer Recommendation</title>
+    <link rel="stylesheet" href="fertpre.css">
+</head>
+<body>
+    <div class="container">
+        <h1>FERTILIZER RECOMMENDATION MODEL</h1>
+
+        <div class="input-row">
+            <div class="input-group">
+                <label for="humidity">Humidity</label>
+                <input type="number" id="humidity" placeholder="Enter Humidity in %">
+            </div>
+            <div class="input-group">
+                <label for="moisture">Moisture</label>
+                <input type="number" id="moisture" placeholder="Enter Moisture">
+            </div>
+            <div class="input-group">
+                <label for="nitrogen">Nitrogen</label>
+                <input type="number" id="nitrogen" placeholder="Enter Nitrogen">
+            </div>
+        </div>
+
+        <div class="input-row">
+            <div class="input-group">
+                <label for="temperature">Temperature</label>
+                <input type="number" id="temperature" placeholder="Enter Temperature in °C">
+            </div>
+            <div class="input-group">
+                <label for="potassium">Potassium</label>
+                <input type="number" id="potassium" placeholder="Enter Potassium">
+            </div>
+            <div class="input-group">
+                <label for="phosphorous">Phosphorous</label>
+                <input type="number" id="phosphorous" placeholder="Enter Phosphorous value">
+            </div>
+        </div>
+
+        <div class="input-row">
+            <div class="input-group">
+                <label for="soilType">Soil Type</label>
+                <select id="soilType">
+                    <option value="loamy">Loamy</option>
+                    <option value="sandy">Sandy</option>
+                    <option value="clay">Clay</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="cropType">Crop Type</label>
+                <select id="cropType">
+                    <option value="sugarcane">Sugarcane</option>
+                    <option value="wheat">Wheat</option>
+                    <option value="rice">Rice</option>
+                </select>
+            </div>
+        </div>
+
+        <button id="recommendButton">GET RECOMMENDATION</button>
+
+        <div id="recommendationResult">
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('recommendButton').addEventListener('click', function() {
+            const humidity = document.getElementById('humidity').value;
+            const moisture = document.getElementById('moisture').value;
+            const nitrogen = document.getElementById('nitrogen').value;
+            const temperature = document.getElementById('temperature').value;
+            const potassium = document.getElementById('potassium').value;
+            const phosphorous = document.getElementById('phosphorous').value;
+            const soilType = document.getElementById('soilType').value;
+            const cropType = document.getElementById('cropType').value;
+
+            // Send data to Python backend
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    humidity: parseFloat(humidity),
+                    moisture: parseFloat(moisture),
+                    nitrogen: parseFloat(nitrogen),
+                    temperature: parseFloat(temperature),
+                    potassium: parseFloat(potassium),
+                    phosphorous: parseFloat(phosphorous),
+                    soilType: soilType,
+                    cropType: cropType
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the result from the Python backend
+                document.getElementById('recommendationResult').innerHTML = data.recommendation;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('recommendationResult').innerHTML = '<p>Error occurred during prediction.</p>';
+            });
+        });
+    </script>
+</body>
+</html>

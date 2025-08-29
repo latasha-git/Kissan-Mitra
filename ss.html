@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Seed Selection</title>
+    <link rel="stylesheet" href="ss.css">
+</head>
+<body>
+    <div class="container">
+        <h1>SMART SEED SELECTION</h1>
+
+        <div class="input-row">
+            <div class="input-group">
+                <label for="soilPh">Soil pH</label>
+                <input type="number" id="soilPh" placeholder="Enter Soil pH">
+            </div>
+            <div class="input-group">
+                <label for="climate">Climate</label>
+                <select id="climate">
+                    <option value="tropical">Tropical</option>
+                    <option value="temperate">Temperate</option>
+                    <option value="arid">Arid</option>
+                    <option value="humid">Humid</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" value="Visakhapatnam, Andhra Pradesh, India" readonly>
+            </div>
+        </div>
+
+        <button id="selectSeedButton">SELECT SEED</button>
+
+        <div id="seedSelectionResult">
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('selectSeedButton').addEventListener('click', function() {
+            const soilPh = document.getElementById('soilPh').value;
+            const climate = document.getElementById('climate').value;
+            const location = document.getElementById('location').value;
+
+            fetch('/seed_selection', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    soilPh: parseFloat(soilPh),
+                    climate: climate,
+                    location: location
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('seedSelectionResult').innerHTML = data.seed;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('seedSelectionResult').innerHTML = '<p>Error occurred during seed selection.</p>';
+            });
+        });
+    </script>
+</body>
+</html>

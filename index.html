@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisaan-Mitra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Navigation Bar - Improved */
+        header {
+            background: #4CAF50; /* Changed to green theme */
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            transition: transform 0.3s;
+        }
+
+        nav .logo:hover {
+            transform: scale(1.05);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: white;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        nav i {
+            display: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        nav i:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive Navigation */
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 20px;
+            }
+            nav ul {
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                right: -250px;
+                width: 200px;
+                height: 100vh;
+                background: #388E3C; /* Darker green */
+                padding-top: 70px;
+                text-align: center;
+                transition: 0.3s;
+                z-index: 999;
+            }
+            nav ul li {
+                margin: 20px 0;
+            }
+            nav i {
+                display: block;
+                z-index: 1000;
+            }
+        }
+
+        /* Hero Section */
+        #home {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./assests/crop.jpg') no-repeat center center/cover;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            padding-top: 80px;
+        }
+
+        .head-text h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease;
+        }
+
+        .head-text p {
+            font-size: 20px;
+            margin-bottom: 20px;
+            animation: fadeIn 1.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Weather Section - Improved */
+        .weather {
+            padding: 40px 20px;
+            background: #f0f8ff;
+            margin: 40px auto;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .weather:hover {
+            transform: translateY(-5px);
+        }
+
+        #weatherLocation {
+            padding: 12px;
+            width: 60%;
+            margin-right: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        #weatherLocation:focus {
+            outline: none;
+            border-color: #388E3C;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+        }
+
+        .weather button {
+            padding: 12px 25px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .weather button:hover {
+            background: #388E3C;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .weather-card {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .weather-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .weather-card img {
+            width: 80px;
+            height: 80px;
+            margin: 10px 0;
+        }
+
+        .error {
+            color: #e53935;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #388E3C;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sections */
+        #about, #projects, #contact {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background: #4CAF50;
+            bottom: -10px;
+            left: 25%;
+            border-radius: 3px;
+        }
+
+        /* Projects Section */
+        .pro-list {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .project {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            width: 300px;
+        }
+
+        .project:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .project img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .project h3 {
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: #f0f8ff;
+            border-radius: 10px;
+            margin: 40px auto;
+            left-padding: 90px;
+        }
+        .contact p{
+            margin-bottom: 20px ;
+        }
+
+        /* Footer */
+        footer {
+            background: #4CAF50;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Kisaan-Mitra</div>
+            <ul id="sidemenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><i class="fas fa-times" onclick="closemenu()"></i></li>
+            </ul>
+            <i class="fas fa-bars" onclick="openmenu()"></i>
+        </nav>
+    </header>
+    
+    <section id="home">
+        <div class="head-text">
+            <h1>Empowering Farmers with AI</h1>
+            <p>Your digital assistant for modern agriculture.</p>
+            <a href="#about" class="btn">Learn More</a>
+        </div>
+    </section>
+    
+    <section id="about">
+        <h2>About Kisaan-Mitra</h2>
+        <p>Kisaan-Mitra is an AI-powered platform designed to assist farmers in crop selection, weather forecasting, and market trends.</p>
+    </section>
+    
+    <div class="weather">
+        <h2>Weather Updates</h2>
+        <input type="text" id="weatherLocation" placeholder="E.g., Bangalore, Karnataka"> 
+        <button onclick="getWeather()">Get Forecast</button>
+        <div id="weatherResult">
+          <!-- Live data will appear here -->
+        </div>
+    </div>
+    
+    <section id="projects">
+        <h2>Our Services</h2>
+        <div class="pro-list">
+            <a href="./crop_cultivation_project/templates/index.html" style="text-decoration: none;">
+                <div class="project">
+                    <img src="./assests/Crop-analysis-system-768x512.jpg" alt="Crop Analysis">
+                    <h3>Crop Analysis</h3>
+                    <p style="color: #000;">Real-time updates for smarter farming.</p>
+                </div>
+            </a>
+            <a href="./fertilizer_prediction_project/frontend/index.html" style="text-decoration: none;">
+                <div class="project" >
+                    <img src="./assests/components-of-different-types-of-fertilizers.jpg" alt="Fertilizer Prediction">
+                    <h3>Fertilizer Prediction</h3>
+                    <p style="color: #000;">Optimize your fertilizer usage.</p>
+                </div>
+            </a>
+            <a href="./crop_cultivation_project/templates/index.html" style="text-decoration: none;">
+                <div class="project">
+                    <img src="./assests/47202170509AM.jpg" alt="Climate Prediction">
+                    <h3>Climate Crop Prediction</h3>
+                    <p style="color: #000;">Plan according to weather patterns.</p>
+                </div>
+            </a>
+            <a href="" style="text-decoration: none;">
+                <div class="project">
+                    <img src="./assests/germinating-seeds.avif" alt="Seed Selection">
+                    <h3>Smart Seed Selection</h3>
+                    <p style="color: #000;">Choose the best seeds for your soil.</p>
+                </div>
+            </a>
+            <a href="" style="text-decoration: none;">
+                <div class="project">
+                    <img src="./assests/crop.jpg" alt="ChatBot">
+                    <h3>ChatBot</h3>
+                    <p style="color: #000;">24/7 assistance for your queries.</p>
+                </div>
+            </a>
+            <a href="./market-prediction/index.html" style="text-decoration: none;">
+                <div class="project">
+                    <img src="./assests/wheat-markets-prices_cr-BILLIONPHOTOS.COM--STOCK.ADOBE.COM_e.jpg" alt="Market Prices">
+                    <h3>Marketing Price Prediction</h3>
+                    <p style="color: #000;">Get the best prices for your produce.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+    
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Get in touch with us via email.</p>
+        <a href="mailto:contact@kisaanmitra.com" class="btn">Connect with Us</a>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 Kisaan-Mitra. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Mobile Menu Functions
+        function openmenu() {
+            document.getElementById("sidemenu").style.right = "0";
+        }
+        
+        function closemenu() {
+            document.getElementById("sidemenu").style.right = "-250px";
+        }
+        
+        // Weather API Integration
+        function getWeather() {
+            const location = document.getElementById("weatherLocation").value;
+            const apiKey = "675a11c03f87424aad7194946252403"; // 🔑 Replace with your actual API key
+            const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`;
+            
+            // Show loading state
+            document.getElementById("weatherResult").innerHTML = '<p>Loading weather data...</p>';
+            
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error.message);
+                    }
+                    showWeather(data);
+                })
+                .catch(error => {
+                    console.error("Error fetching weather:", error);
+                    document.getElementById("weatherResult").innerHTML = 
+                        `<p class="error">⚠️ ${error.message || "Failed to fetch weather data. Please try again."}</p>`;
+                });
+        }
+
+        function showWeather(data) {
+            const weather = {
+                city: data.location.name,
+                region: data.location.region,
+                country: data.location.country,
+                temp: data.current.temp_c,
+                humidity: data.current.humidity,
+                wind: data.current.wind_kph,
+                icon: data.current.condition.icon,
+                description: data.current.condition.text,
+                feelsLike: data.current.feelslike_c
+            };
+
+            document.getElementById("weatherResult").innerHTML = `
+                <div class="weather-card">
+                    <h3>${weather.city}, ${weather.region}</h3>
+                    <img src="${weather.icon}" alt="${weather.description}">
+                    <p>🌡️ Temperature: <strong>${weather.temp}°C</strong> (Feels like ${weather.feelsLike}°C)</p>
+                    <p>💧 Humidity: <strong>${weather.humidity}%</strong></p>
+                    <p>🌬️ Wind: <strong>${weather.wind} km/h</strong></p>
+                    <p>☁️ <strong>${weather.description}</strong></p>
+                </div>
+            `;
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = "rgba(76, 175, 80, 0.95)";
+                header.style.padding = "10px 0";
+            } else {
+                header.style.background = "#4CAF50";
+                header.style.padding = "15px 0";
+            }
+        });
+    </script>
+    <script src="//code.tidio.co/xmwbklrwy7qnztxpy2tikmxn2yaphinp.js" async></script>
+</body>
+</html>
