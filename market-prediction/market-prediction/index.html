@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Prediction</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .results {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Market Prediction</h1>
+        <form id="predictionForm">
+            <div class="form-group">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" required>
+            </div>
+            <div class="form-group">
+                <label for="crop">Crop:</label>
+                <input type="text" id="crop" name="crop" required>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+
+        <div class="results" id="results" style="display: none;">
+            <h2>Results for <span id="resultState"></span> - <span id="resultCrop"></span>:</h2>
+            <p><strong>Estimated Cost of Cultivation (INR):</strong> ₹<span id="costPrediction"></span></p>
+            <p><strong>Expected Earnings from Selling Yield (INR):</strong> ₹<span id="pricePrediction"></span></p>
+        </div>
+
+        <p class="error" id="errorMessage" style="display: none;"></p>
+    </div>
+
+    <script>
+        document.getElementById("predictionForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Get user inputs
+            const stateInput = document.getElementById("state").value.trim();
+            const cropInput = document.getElementById("crop").value.trim();
+
+            // Clear previous results
+            document.getElementById("errorMessage").style.display = "none";
+            document.getElementById("results").style.display = "none";
+
+            // Validate inputs
+            if (!stateInput || !cropInput) {
+                document.getElementById("errorMessage").textContent = "Please provide valid inputs.";
+                document.getElementById("errorMessage").style.display = "block";
+                return;
+            }
+
+            // Simulate a delay (You can replace this with a real API call to the backend)
+            setTimeout(function() {
+                // Mock prediction values
+                const costPrediction = 12000 + Math.random() * 5000; // Random value for cost
+                const pricePrediction = 20000 + Math.random() * 10000; // Random value for price
+
+                // Display the results
+                document.getElementById("resultState").textContent = stateInput;
+                document.getElementById("resultCrop").textContent = cropInput;
+                document.getElementById("costPrediction").textContent = costPrediction.toFixed(2);
+                document.getElementById("pricePrediction").textContent = pricePrediction.toFixed(2);
+                document.getElementById("results").style.display = "block";
+            }, 1000); // Simulate 1 second of processing time
+        });
+    </script>
+</body>
+</html>

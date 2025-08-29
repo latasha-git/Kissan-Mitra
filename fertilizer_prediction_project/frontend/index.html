@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertilizer Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Fertilizer Prediction</h2>
+        <input type="number" id="nitrogen" placeholder="Nitrogen Level">
+        <input type="number" id="phosphorus" placeholder="Phosphorus Level">
+        <input type="number" id="potassium" placeholder="Potassium Level">
+        <input type="text" id="crop" placeholder="Enter Crop Type">
+        <input type="number" id="ph" placeholder="pH Level">
+        <button onclick="predictFertilizer()">Predict</button>
+        <h3 id="result"></h3>
+    </div>
+
+    <script>
+        async function predictFertilizer() {
+            const nitrogen = document.getElementById("nitrogen").value;
+            const phosphorus = document.getElementById("phosphorus").value;
+            const potassium = document.getElementById("potassium").value;
+            const crop = document.getElementById("crop").value.trim();
+            const pH = document.getElementById("ph").value;
+
+            if (!nitrogen || !phosphorus || !potassium || !crop || !pH) {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            try {
+                const response = await fetch("http://127.0.0.1:5000/predict", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nitrogen, phosphorus, potassium, crop, pH })
+                });
+
+                const data = await response.json();
+                document.getElementById("result").innerText = data.recommended_fertilizer 
+                    ? `Recommended Fertilizer: ${data.recommended_fertilizer}`
+                    : "Error in prediction!";
+            } catch (error) {
+                document.getElementById("result").innerText = "Error connecting to server!";
+            }
+        }
+    </script>
+
+</body>
+</html>

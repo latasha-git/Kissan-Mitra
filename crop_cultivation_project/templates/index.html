@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Cultivation Prediction</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #f8f9fa;
+            transition: border 0.3s ease-in-out;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 15px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🌾 Crop Cultivation Prediction</h2>
+
+        <div class="input-group">
+            <label for="crop">Crop Name</label>
+            <input type="text" id="crop" placeholder="Enter crop name" required>
+        </div>
+
+        <div class="input-group">
+            <label for="temperature">Temperature (°C)</label>
+            <input type="number" id="temperature" placeholder="Enter temperature" required>
+        </div>
+
+        <div class="input-group">
+            <label for="rainfall">Rainfall (mm)</label>
+            <input type="number" id="rainfall" placeholder="Enter rainfall" required>
+        </div>
+
+        <div class="input-group">
+            <label for="humidity">Humidity (%)</label>
+            <input type="number" id="humidity" placeholder="Enter humidity" required>
+        </div>
+
+        <div class="input-group">
+            <label for="soil_moisture">Soil Moisture (%)</label>
+            <input type="number" id="soil_moisture" placeholder="Enter soil moisture" required>
+        </div>
+
+        <div class="input-group">
+            <label for="pH">pH Level</label>
+            <input type="number" id="pH" step="0.1" placeholder="Enter pH level" required>
+        </div>
+
+        <div class="input-group">
+            <label for="sunlight">Sunlight (hours/day)</label>
+            <input type="number" id="sunlight" placeholder="Enter sunlight hours" required>
+        </div>
+
+        <div class="input-group">
+            <label for="wind_speed">Wind Speed (km/h)</label>
+            <input type="number" id="wind_speed" placeholder="Enter wind speed" required>
+        </div>
+
+        <button onclick="predict()">🌱 Predict</button>
+
+        <p class="result" id="result"></p>
+        <p class="error" id="error"></p>
+    </div>
+
+    <script>
+        async function predict() {
+            // Clear previous results
+            document.getElementById("result").innerText = "";
+            document.getElementById("error").innerText = "";
+
+            // Collect input values
+            const crop = document.getElementById("crop").value.trim();
+            const temperature = parseFloat(document.getElementById("temperature").value);
+            const rainfall = parseFloat(document.getElementById("rainfall").value);
+            const humidity = parseFloat(document.getElementById("humidity").value);
+            const soil_moisture = parseFloat(document.getElementById("soil_moisture").value);
+            const pH = parseFloat(document.getElementById("pH").value);
+            const sunlight = parseFloat(document.getElementById("sunlight").value);
+            const wind_speed = parseFloat(document.getElementById("wind_speed").value);
+
+            // Validation
+            if (!crop || isNaN(temperature) || isNaN(rainfall) || isNaN(humidity) || isNaN(soil_moisture) || isNaN(pH) || isNaN(sunlight) || isNaN(wind_speed)) {
+                document.getElementById("error").innerText = "⚠️ Please fill all fields correctly.";
+                return;
+            }
+
+            const data = { crop, temperature, rainfall, humidity, soil_moisture, pH, sunlight, wind_speed };
+
+            try {
+                const response = await fetch("http://127.0.0.1:5000/predict", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                console.log("✅ API Response:", result);
+
+                if (result.result) {
+                    document.getElementById("result").innerText = "✅ " + result.result;
+                } else {
+                    document.getElementById("error").innerText = "❌ " + (result.error || "Error processing request.");
+                }
+            } catch (error) {
+                console.error("❌ Error:", error);
+                document.getElementById("error").innerText = "❌ Could not connect to the server!";
+            }
+        }
+    </script>
+
+</body>
+</html>

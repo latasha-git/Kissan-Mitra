@@ -1,0 +1,51 @@
+Nitrogen,Phosphorus,Potassium,Crop Type,pH Level,Recommended Fertilizer
+52,29,21,Rice,4.9,Dap
+96,4,50,Wheat,7.3,Dap
+46,37,12,Soybean,8.2,Mop
+80,15,11,Barley,5.0,Dap
+24,90,73,Wheat,6.9,Urea
+68,11,44,Maize,6.8,Dap
+30,80,41,Sugarcane,7.9,Urea
+97,47,37,Sugarcane,5.7,Mop
+51,16,44,Cotton,6.3,Dap
+68,98,100,Rice,7.0,Super Phosphate
+80,78,38,Wheat,6.2,Urea
+98,48,92,Barley,5.6,Ammonium Sulfate
+0,48,22,Cotton,7.1,Urea
+23,77,80,Sugarcane,7.4,Urea
+19,30,59,Sugarcane,8.3,Urea
+92,6,47,Maize,7.1,Dap
+10,15,81,Soybean,7.1,Urea
+28,31,14,Soybean,8.4,Urea
+5,29,42,Wheat,6.0,Urea
+58,56,63,Maize,8.3,Sulfur
+72,72,60,Soybean,5.6,Ammonium Sulfate
+44,37,32,Cotton,5.3,Lime
+57,63,84,Cotton,7.1,Urea
+8,47,56,Wheat,7.9,Urea
+43,1,15,Wheat,4.7,Dap
+56,73,67,Soybean,8.1,Sulfur
+47,46,32,Rice,7.6,Sulfur
+26,73,56,Sugarcane,5.3,Urea
+32,22,39,Groundnut,6.3,Urea
+93,16,12,Sugarcane,4.7,Dap
+36,46,68,Cotton,5.7,Urea
+38,80,91,Wheat,7.3,Urea
+49,85,22,Cotton,5.4,Mop
+96,35,36,Barley,6.9,Urea
+35,48,79,Maize,8.5,Urea
+89,39,68,Sugarcane,5.4,Lime
+92,4,45,Wheat,6.8,Dap
+97,88,93,Cotton,7.0,Mop
+5,68,25,Rice,7.8,Urea
+47,27,75,Cotton,6.1,Dap
+46,58,48,Maize,7.6,Sulfur
+27,52,42,Soybean,5.6,Urea
+69,28,61,Maize,7.9,Dap
+44,46,75,Wheat,7.6,Sulfur
+48,44,41,Soybean,7.6,Sulfur
+28,3,48,Barley,7.0,Urea
+44,62,98,Groundnut,5.8,Dap
+3,75,85,Cotton,4.8,Urea
+34,0,52,Barley,5.8,Urea
+74,32,18,Groundnut,7.7,Mop
